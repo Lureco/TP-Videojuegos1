@@ -3,12 +3,14 @@ class Protagonista extends Persona {
         super(x, y, juego);
 
         this.container.name = "protagonista";
-
+        
+        var clickX = 0 // fue luchito
+        var clickY = 0 // fue luchito
         this.container.tint = 0x0000ff;
         this.velocidadMaxima = 3;
         this.accMax = 0.33;
         this.valorFriccion = 0.95;
-
+        this.SeEstaMoviendo = false ;
         this.cargarSpritesAnimados()
     }
 
@@ -16,12 +18,48 @@ class Protagonista extends Persona {
         if (this.muerta) return;
 
         this.moverseSegunTeclado();
+        this.moverseSegunClick(); // lucho fue
+        this.moverseHaciaElclick(); // lucho fue
 
         super.update();
 
         this.limitarPosicion();
     }
+    moverseSegunClick(){ // fue lucho
+        app.stage.eventMode = 'static';
+        app.stage.hitArea = app.screen;  // lee los click en pantalla
+        app.stage.on('pointerdown', (event) => { // Establece el lugar dopndefue el click
+            clickX = event.global.x;
+            clickY = event.global.y;
+            SeEstaMoviendo = true;
+        });
+    }
 
+    moverseHaciaElclick(){ // tmb fui yo 
+        app.ticker.add(() => { // actualiza la pos del prota en  cada frame
+            if (SeEstaMoviendo) {
+                //calcula  la direccion y deistancia al click
+                const dx = clickX - this.x; 
+                const dy = clickY - this.y;
+                const distancia = Math.sqrt(dx * dx + dy * dy);
+                // si estamos cerca del objetivo detiene el movimiento
+                if (distancia < this.velocidadMaxima){
+                    this.x = clickX
+                    this.y = clickY
+                    this.SeEstaMoviendo = false ;
+                }
+                else
+                // ubica al pj hacia el objetivo
+                this.x += (dx / distancia) * this.velocidadMaxima
+                this.y += (dy / distancia) * this.velocidadMaxima
+            }
+            })
+    }
+       
+     
+
+        
+    
     moverseSegunTeclado() {
         let accX = 0;
         let accY = 0;
