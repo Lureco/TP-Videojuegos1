@@ -2,6 +2,8 @@ class Persona extends Entidad {
     constructor(x, y, juego) {
         super(x, y, juego);
         this.nombre = "Persona";
+        var listaDeCompra = []       //luchito
+        var carrito = []         //luchito
         this.spritesAnimados = {};
         this.crearContainer();
     }
@@ -13,6 +15,63 @@ class Persona extends Entidad {
             console.log("click en", this);
         });
     }
+
+   
+    crearProducto(){
+      productoBuscado = Math.floor(Math.random() * 6) // segun el numero elige un prducto al azar, si mas pobre el local
+      
+      if(productoBuscado == 0) {
+        return leche
+      }
+      else if (productoBuscado == 1){
+        return arroz
+      }
+      else if (productoBuscado == 2){
+        return huevos
+      }
+      else if (productoBuscado == 3){   //version de donde me da la cabecita
+        return pan
+      }
+      else if (productoBuscado == 4){
+        return agua
+      }
+       else if (productoBuscado == 5){
+        return carne
+      }
+
+    //  }crearProducto() {
+    //let productoBuscado = Math.floor(Math.random() * 5); // 0-4
+    
+    //if (productoBuscado == 0) {
+    //    return { id: Date.now(), nombre: "Manzana", precio: 2.50, categoria: "Fruta" };
+    //} else if (productoBuscado == 1) {
+      //  return { id: Date.now(), nombre: "Pan", precio: 1.20, categoria: "Panadería" };
+   // } else if (productoBuscado == 2) {                                                     version por si le ponemos precios
+     //   return { id: Date.now(), nombre: "Leche", precio: 3.00, categoria: "Lácteos" };
+    //} else if (productoBuscado == 3) {
+     //   return { id: Date.now(), nombre: "Arroz", precio: 4.50, categoria: "Cereales" };
+    //} else {
+      //  return { id: Date.now(), nombre: "Huevos", precio: 2.80, categoria: "Proteínas" };
+    //}
+}
+    
+
+    agregarALista(){
+     let cantidadDeProductos =  Math.floor(Math.random() * 15) + 1
+     let i = 0
+       if (i < cantidadDeProductos){
+        this.listaDeCompra.push(this.crearProducto())
+        i++
+       }
+    }
+
+    
+
+    comprarProducto(producto){ //luchito
+        this.carrito.push(producto)
+
+    }
+
 
     update() {
         super.update();
